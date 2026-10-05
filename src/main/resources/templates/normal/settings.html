@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="normal/base :: layout(~{::section})">
+<head>
+    <meta charset="UTF-8">
+    <title>Settings</title>
+</head>
+<body>
+
+<section>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow-sm border-0">
+                    <div class="card-body p-4">
+
+                        <h3 class="text-center font-weight-bold mb-4">
+                            <i class="fa-solid fa-gear text-primary mr-2"></i>Change Password
+                        </h3>
+
+                        <form th:action="@{/user/change-password}" method="post">
+
+                            <!-- Old Password -->
+                            <div class="form-group mb-3">
+                                <label for="oldPassword" class="font-weight-bold">Old Password</label>
+                                <input type="password" name="oldPassword" id="oldPassword"
+                                       class="form-control" placeholder="Enter your current password" required autofocus>
+                            </div>
+
+                            <!-- New Password -->
+                            <div class="form-group mb-4">
+                                <label for="newPassword" class="font-weight-bold">New Password</label>
+                                <input type="password" name="newPassword" id="newPassword"
+                                       class="form-control" placeholder="Enter new strong password" required minlength="4">
+                            </div>
+
+                            <!-- Submit / Cancel -->
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary px-4 mr-2">
+                                    <i class="fa-solid fa-check mr-1"></i> Update Password
+                                </button>
+                                <a th:href="@{/user/profile}" class="btn btn-secondary px-4">Cancel</a>
+                            </div>
+
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>

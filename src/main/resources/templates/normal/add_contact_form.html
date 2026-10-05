@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="normal/base :: layout(~{::section})">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Contact</title>
+</head>
+<body>
+
+<section>
+    <div class="card mr-3 ml-3 shadow-sm border-0">
+        <div class="card-body">
+            <h2 class="text-center font-weight-bold mb-4">
+                <i class="fa-solid fa-user-plus text-primary mr-2"></i>Add Contact
+            </h2>
+
+            <div class="container-fluid mt-1">
+                <div class="row">
+                    <div class="col-md-10 offset-md-1">
+
+                        <form action="#"
+                              th:action="@{/user/process-contact}"
+                              method="post"
+                              th:object="${contact}"
+                              enctype="multipart/form-data">
+
+                            <!-- First Name -->
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fa-solid fa-user"></i></span>
+                                </div>
+                                <input type="text" id="firstName" name="name" placeholder="Enter Name here"
+                                       class="form-control" required autofocus/>
+                            </div>
+
+                            <!-- Second Name -->
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fa-solid fa-user-tag"></i></span>
+                                </div>
+                                <input type="text" id="secondName" name="secondName"
+                                       placeholder="Enter Nick Name here" class="form-control"/>
+                            </div>
+
+                            <!-- Phone -->
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fa-solid fa-phone"></i></span>
+                                </div>
+                                <input type="number" id="phone" name="phone" placeholder="Enter Phone Number here"
+                                       class="form-control" required min="1000000000"/>
+                            </div>
+
+                            <!-- Email -->
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fa-solid fa-envelope"></i></span>
+                                </div>
+                                <input type="email" id="email" name="email" placeholder="Enter Email here"
+                                       class="form-control" required/>
+                            </div>
+
+                            <!-- Work -->
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fa-solid fa-briefcase"></i></span>
+                                </div>
+                                <input type="text" id="work" name="work" placeholder="Enter Profession / Work"
+                                       class="form-control"/>
+                            </div>
+
+                            <!-- Contact Description -->
+                            <div class="form-group mb-3">
+                                <textarea name="description" id="description" class="form-control"
+                                          rows="5" placeholder="Enter Contact Description..."></textarea>
+                            </div>
+
+                            <!-- Image Upload -->
+                            <div class="custom-file mb-4">
+                                <input type="file" name="imageFile" class="form-control-file" id="imageFile">
+                                <small class="form-text text-muted">Upload contact profile image (optional, max 10MB)</small>
+                            </div>
+
+                            <!-- Submit / Reset Buttons -->
+                            <div class="container text-center">
+                                <button type="submit" class="btn btn-primary px-4">Save Contact</button>
+                                <button type="reset" class="btn btn-warning text-white px-4">Reset</button>
+                            </div>
+
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+</body>
+</html>

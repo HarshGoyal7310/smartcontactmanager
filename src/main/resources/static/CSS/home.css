@@ -1,0 +1,267 @@
+/* Body styling */
+body {
+    background-color: #f8f9fa;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Primary Color Customization */
+.bg-primary {
+    background-color: #007bff !important;
+}
+
+/* Public Banner */
+.banner {
+    width: 100%;
+    min-height: 85vh;
+    background: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)),
+                url('../images/call img.jpeg');
+    background-size: cover;
+    background-position: center;
+    color: white;
+}
+
+/* Common Card */
+.my-card {
+    padding: 25px;
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+}
+
+/* ========================================= */
+/*  User Dashboard & Sidebar Styling         */
+/* ========================================= */
+
+.sidebar {
+    width: 20%;
+    background: white;
+    height: 100%;
+    position: fixed;
+    top: 56px; /* navbar ke niche */
+    left: 0;
+    padding-top: 20px;
+    border-right: 1px solid #e2e8f0;
+    z-index: 999;
+}
+
+.sidebar a {
+    display: block;
+    width: 100%;
+    padding: 12px 25px;
+    text-decoration: none;
+    color: #4a5568;
+    font-weight: 500;
+}
+
+.sidebar a:hover {
+    background-color: #edf2f7;
+    color: #007bff;
+}
+
+.sidebar .divider {
+    height: 1px;
+    width: 100%;
+    background: #e2e8f0;
+    margin: 10px 0;
+}
+
+/* Main Content Area */
+.content {
+    margin-left: 20%;
+    padding: 20px;
+}
+
+/* Contact Image Thumbnail */
+.my_profile_picture {
+    width: 35px;
+    height: 35px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+/* Responsive adjustments for mobile screens */
+@media (max-width: 768px) {
+    .sidebar {
+        display: none;
+        width: 80%;
+        box-shadow: 2px 0 10px rgba(0,0,0,0.2);
+    }
+
+    .content {
+        margin-left: 0% !important;
+    }
+    /* Search Container & Dropdown */
+    .search-container {
+        position: relative;
+    }
+
+    .search-result {
+        position: absolute;
+        background: white;
+        width: 100%;
+        padding: 0;
+        border: 1px solid #e2e8f0;
+        border-radius: 4px;
+        display: none;
+        z-index: 1000;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        max-height: 250px;
+        overflow-y: auto;
+    }
+    /* Body styling */
+    body {
+        background-color: #f1f5f9;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        color: #334155;
+        overflow-x: hidden;
+    }
+
+    /* Primary Navbar */
+    .bg-primary {
+        background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%) !important;
+    }
+
+    /* ========================================= */
+    /*  Modern SaaS Hero Banner (home.html)      */
+    /* ========================================= */
+    .hero-section {
+        min-height: 85vh;
+        background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        color: white;
+        display: flex;
+        align-items: center;
+        padding: 60px 0;
+    }
+
+    .hero-title {
+        font-size: 3rem;
+        font-weight: 800;
+        line-height: 1.2;
+        background: linear-gradient(to right, #60a5fa, #a855f7);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .feature-card {
+        background: white;
+        border-radius: 12px;
+        padding: 25px;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        border: 1px solid #e2e8f0;
+    }
+
+    .feature-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+    }
+
+    /* ========================================= */
+    /*  Fully Responsive Sidebar (Desktop & Mobile) */
+    /* ========================================= */
+    .sidebar {
+        width: 250px;
+        background: white;
+        height: calc(100vh - 56px);
+        position: fixed;
+        top: 56px;
+        left: 0;
+        padding-top: 15px;
+        border-right: 1px solid #e2e8f0;
+        z-index: 1040;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .sidebar a {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        padding: 12px 20px;
+        text-decoration: none;
+        color: #475569;
+        font-size: 15px;
+        font-weight: 500;
+        border-left: 4px solid transparent;
+        transition: all 0.2s;
+    }
+
+    .sidebar a:hover, .sidebar a.active {
+        background-color: #eff6ff;
+        color: #2563eb;
+        border-left-color: #2563eb;
+    }
+
+    .sidebar .divider {
+        height: 1px;
+        background: #e2e8f0;
+        margin: 12px 0;
+    }
+
+    /* Main Content Area */
+    .content {
+        margin-left: 250px;
+        padding: 25px;
+        transition: all 0.3s ease-in-out;
+    }
+
+    /* Contact Image Thumbnail */
+    .my_profile_picture {
+        width: 40px;
+        height: 40px;
+        object-fit: cover;
+        border-radius: 50%;
+    }
+
+    /* Search Dropdown */
+    .search-container {
+        position: relative;
+    }
+
+    .search-result {
+        position: absolute;
+        background: white;
+        width: 100%;
+        border: 1px solid #cbd5e1;
+        border-radius: 6px;
+        display: none;
+        z-index: 1050;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        max-height: 250px;
+        overflow-y: auto;
+    }
+
+    /* ========================================= */
+    /*  Mobile Screen Breakpoints (Max 768px)    */
+    /* ========================================= */
+    @media (max-width: 768px) {
+        .sidebar {
+            left: -250px; /* Hide off-canvas on mobile */
+            box-shadow: 4px 0 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .sidebar.sidebar-open {
+            left: 0; /* Slide in on mobile */
+        }
+
+        .content {
+            margin-left: 0 !important;
+            padding: 15px;
+        }
+
+        .hero-title {
+            font-size: 2.2rem;
+        }
+    }
+    /* Table me Dropdown cut hone se bachaye */
+    .table-responsive {
+        overflow: visible !important;
+    }
+
+    .dropdown-menu {
+        z-index: 1060 !important;
+    }
+
+    /* Icon par click karne se button trigger ho */
+    .dropdown button i {
+        pointer-events: none;
+    }
+}

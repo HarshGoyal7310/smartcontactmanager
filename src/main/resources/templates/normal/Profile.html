@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="normal/base :: layout(~{::section})">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Profile</title>
+</head>
+<body>
+
+<section>
+    <div class="container">
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+
+                <div class="container text-center">
+
+                    <!-- Profile Image -->
+                    <img style="height: 150px; width: 150px; object-fit: cover;"
+                         class="my_profile_picture border rounded-circle shadow-sm"
+                         th:src="@{'/images/' + ${user.imageUrl}}"
+                         src="/images/default.png"
+                         alt="User Picture">
+
+                    <h2 class="mt-3 font-weight-bold" th:text="${user.name}">User Name</h2>
+                    <p class="text-secondary" th:text="${user.email}">user@email.com</p>
+
+                    <!-- Details Table -->
+                    <div class="table-responsive col-md-8 offset-md-2 mt-4">
+                        <table class="table table-bordered text-left">
+                            <tbody>
+                            <tr>
+                                <th scope="row" style="width: 35%;">User ID</th>
+                                <td><strong th:text="${'SCMUSER' + user.id}"></strong></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Email Address</th>
+                                <td><span th:text="${user.email}"></span></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Role</th>
+                                <td><span class="badge badge-primary px-2 py-1" th:text="${user.role}"></span></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Account Status</th>
+                                <td>
+                                    <span th:if="${user.enabled}" class="badge badge-success px-2 py-1">Active</span>
+                                    <span th:unless="${user.enabled}" class="badge badge-danger px-2 py-1">Inactive</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">About You</th>
+                                <td><span th:text="${user.about != null and !user.about.isEmpty() ? user.about : 'No bio added yet.'}"></span></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Quick Actions -->
+                    <div class="mt-4">
+                        <a th:href="@{/user/settings}" class="btn btn-outline-primary px-4 mr-2">
+                            <i class="fa-solid fa-key mr-1"></i> Change Password
+                        </a>
+                        <a th:href="@{/user/index}" class="btn btn-secondary px-4">
+                            <i class="fa-solid fa-arrow-left mr-1"></i> Back to Dashboard
+                        </a>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Danger Zone (Delete Account) -->
+    <div class="col-md-8 offset-md-2 mt-5 text-left border border-danger rounded p-3 bg-white shadow-sm">
+        <h5 class="text-danger font-weight-bold">
+            <i class="fa-solid fa-triangle-exclamation mr-1"></i> Danger Zone
+        </h5>
+        <p class="text-muted small mb-3">
+            Once you delete your account, there is no going back. All your saved contacts, images, and data will be permanently wiped out.
+        </p>
+        <button type="button" onclick="deleteUserAccount()" class="btn btn-outline-danger btn-sm">
+            <i class="fa-solid fa-user-xmark mr-1"></i> Delete My Account
+        </button>
+    </div>
+</section>
+
+</body>
+</html>

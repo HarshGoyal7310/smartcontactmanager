@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="base :: layout(~{::section})">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - Smart Contact Manager</title>
+</head>
+<body>
+
+<section>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-sm-10 col-md-8 col-lg-5">
+                <div class="my-card mt-4 p-4 bg-white rounded shadow-sm">
+
+                    <h2 class="text-center font-weight-bold mb-3">Login Here</h2>
+
+                    <!-- Error Alert (Invalid credentials) -->
+                    <div th:if="${param.error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                        Invalid username or password !!
+                    </div>
+
+                    <!-- Logout Alert -->
+                    <div th:if="${param.logout}" class="alert alert-success alert-dismissible fade show" role="alert">
+                        You have been logged out successfully.
+                    </div>
+
+                    <!-- Action MUST be /dologin as configured in SecurityConfig -->
+                    <form th:action="@{/dologin}" method="post">
+
+                        <div class="form-group mb-3">
+                            <label for="username">Email Address</label>
+                            <input type="email" class="form-control" id="username" name="username"
+                                   placeholder="Enter your email" required autofocus>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="password">Password</label>
+                            <input type="password" class="form-control" id="password" name="password"
+                                   placeholder="Enter your password" required>
+                        </div>
+
+                        <div class="text-center mt-4">
+                            <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+                        </div>
+
+                        <div class="text-center mt-3">
+                            <small>Don't have an account? <a th:href="@{/signup}">Register here</a></small>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>

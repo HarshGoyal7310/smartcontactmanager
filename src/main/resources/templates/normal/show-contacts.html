@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{normal/base :: layout(~{::section})}">
+<head>
+    <meta charset="UTF-8">
+    <title>View Contacts</title>
+</head>
+<body>
+
+<section>
+    <div class="card mr-3 ml-3 shadow-sm border-0">
+        <div class="card-body">
+            <h2 class="text-center font-weight-bold mb-4">
+                <i class="fa-solid fa-address-book text-primary mr-2"></i>Your Contacts
+            </h2>
+
+            <!-- Action Toolbar (Export, Import & Starred Filters) -->
+            <div class="d-flex justify-content-between align-items-center flex-wrap mb-3">
+                <div class="mb-2">
+                    <!-- Filter Pills -->
+                    <a th:href="@{/user/show-contacts/0(filter='all')}"
+                       class="btn btn-sm mr-1"
+                       th:classappend="${filter == 'all' or filter == null ? 'btn-primary' : 'btn-outline-secondary'}">
+                        All Contacts
+                    </a>
+                    <a th:href="@{/user/show-contacts/0(filter='favorites')}"
+                       class="btn btn-sm mr-3"
+                       th:classappend="${filter == 'favorites' ? 'btn-warning text-dark font-weight-bold' : 'btn-outline-warning text-dark'}">
+                        <i class="fa-solid fa-star text-warning mr-1"></i> Starred
+                    </a>
+
+                    <!-- Export & Import -->
+                    <a th:href="@{/user/export-csv}" class="btn btn-outline-success btn-sm mr-1">
+                        <i class="fa-solid fa-file-excel mr-1"></i> Export CSV
+                    </a>
+                    <button type="button" class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#importModal">
+                        <i class="fa-solid fa-file-arrow-up mr-1"></i> Import
+                    </button>
+                </div>
+
+                <div class="mb-2">
+                    <a th:href="@{/user/add-contact}" class="btn btn-primary btn-sm">
+                        <i class="fa-solid fa-user-plus mr-1"></i> Add Contact
+                    </a>
+                </div>
+            </div>
+
+            <!-- Search Bar -->
+            <div class="search-container my-3">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text bg-white"><i class="fa-solid fa-magnifying-glass text-muted"></i></span>
+                    </div>
+                    <input onkeyup="search()" id="search-input" type="text" class="form-control"
+                           placeholder="Search your contacts instantly by name..." autocomplete="off"/>
+                </div>
+                <div class="search-result"></div>
+            </div>
+
+            <!-- Table Responsive -->
+            <div class="table-responsive" style="min-height: 250px;">
+                <table class="table table-hover text-center align-middle">
+                    <thead class="thead-light">
+                    <tr>
+                        <th scope="col">#ID</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Phone</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="c : ${contacts}">
+                        <!-- 1. Contact ID -->
+                        <th scope="row" th:text="${'SCMUSER' + c.cId}">1</th>
+
+                        <!-- 2. Photo & Name with Star Icon -->
+                        <td class="text-left pl-3">
+                            <i class="fa-star mr-2"
+                               style="cursor: pointer; font-size: 16px;"
+                               th:classappend="${c.favorite} ? 'fa-solid text-warning' : 'fa-regular text-muted'"
+                               th:onclick="|toggleFavorite(${c.cId}, this)|"
+                               title="Click to Star / Unstar"></i>
+
+                            <img class="my_profile_picture border"
+                                 th:src="@{'/images/' + ${c.image}}"
+                                 src="/images/contact.png"
+                                 alt="contact photo">
+                            <span class="ml-2 font-weight-bold text-dark" th:text="${c.name}"></span>
+                        </td>
+
+                        <!-- 3. Email -->
+                        <td>
+                            <a th:href="@{'/user/contact/' + ${c.cId}}">
+                                <span th:text="${c.email}"></span>
+                            </a>
+                        </td>
+
+                        <!-- 4. Phone -->
+                        <td th:text="${c.phone}"></td>
+
+                        <!-- 5. Action Dropdown (3-Dots) -->
+                        <td style="position: relative;">
+                            <div class="dropdown">
+                                <button class="btn btn-light btn-sm text-secondary border px-2 py-1"
+                                        type="button"
+                                        onclick="event.stopPropagation(); document.querySelectorAll('.dropdown-menu').forEach(m => m !== this.nextElementSibling && m.classList.remove('show')); this.nextElementSibling.classList.toggle('show');"
+                                        style="border-radius: 50%; width: 32px; height: 32px;">
+                                    <i class="fa-solid fa-ellipsis-vertical" style="pointer-events: none;"></i>
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-right shadow border-0"
+                                     style="position: absolute; right: 0; z-index: 9999;">
+                                    <a class="dropdown-item py-2" th:href="@{'/user/contact/' + ${c.cId}}">
+                                        <i class="fa-solid fa-eye text-info mr-2"></i> View Details
+                                    </a>
+                                    <form th:action="@{'/user/update-contact/' + ${c.cId}}" method="post" class="m-0 p-0">
+                                        <button type="submit" class="dropdown-item py-2 border-0 bg-transparent text-left w-100">
+                                            <i class="fa-solid fa-pen-to-square text-primary mr-2"></i> Edit Contact
+                                        </button>
+                                    </form>
+                                    <div class="dropdown-divider my-1"></div>
+                                    <a class="dropdown-item py-2 text-danger" href="javascript:void(0)" th:onclick="|deleteContact(${c.cId})|">
+                                        <i class="fa-solid fa-trash mr-2"></i> Delete Contact
+                                    </a>
+                                </div>
+                            </div>
+                        </td>
+
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Empty State Agar contacts na ho -->
+            <div th:if="${contacts.totalElements == 0}" class="text-center my-4">
+                <h4 class="text-muted">No contacts found!</h4>
+                <a th:href="@{/user/add-contact}" class="btn btn-primary mt-2">Add Contact</a>
+            </div>
+
+            <!-- Pagination Bar (Filter Preserved) -->
+            <nav th:if="${totalPages > 1}" aria-label="Page navigation">
+                <ul class="pagination justify-content-center mt-4">
+                    <li th:if="${currentPage != 0}" class="page-item">
+                        <a class="page-link" th:href="@{'/user/show-contacts/' + ${currentPage - 1}(filter=${filter})}">Previous</a>
+                    </li>
+                    <li th:each="i : ${#numbers.sequence(1, totalPages)}"
+                        th:classappend="${currentPage == i - 1 ? 'active' : ''}"
+                        class="page-item">
+                        <a class="page-link" th:href="@{'/user/show-contacts/' + ${i - 1}(filter=${filter})}">
+                            <span th:text="${i}"></span>
+                        </a>
+                    </li>
+                    <li th:if="${currentPage + 1 != totalPages}" class="page-item">
+                        <a class="page-link" th:href="@{'/user/show-contacts/' + ${currentPage + 1}(filter=${filter})}">Next</a>
+                    </li>
+                </ul>
+            </nav>
+
+        </div>
+    </div>
+
+    <!-- Bulk Import Modal -->
+    <div class="modal fade" id="importModal" tabindex="-1" role="dialog" aria-labelledby="importModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title font-weight-bold" id="importModalLabel">
+                        <i class="fa-solid fa-file-arrow-up text-primary mr-2"></i>Bulk Import Contacts
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form th:action="@{/user/import-contacts}" method="post" enctype="multipart/form-data">
+                    <div class="modal-body text-left">
+                        <p class="text-muted small">
+                            Import dozens or hundreds of contacts at once using a CSV/Excel file.
+                        </p>
+
+                        <div class="alert alert-info py-2 small mb-3">
+                            <i class="fa-solid fa-circle-info mr-1"></i>
+                            Don't know the format?
+                            <a th:href="@{/user/sample-csv}" class="font-weight-bold text-primary">Download Sample CSV Template</a>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="csvFile" class="font-weight-bold">Select CSV File:</label>
+                            <input type="file" name="csvFile" id="csvFile" class="form-control-file" accept=".csv" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary btn-sm px-3">Upload & Import</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>
